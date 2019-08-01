@@ -1,13 +1,21 @@
 import React, { Component } from 'react';
-import { StyleSheet, ScrollView, FlatList, View, Text, } from 'react-native';
+import PropTypes from 'prop-types';
+import { StyleSheet, ScrollView, FlatList, View, Text, Animated } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
 import ContactsList from '../screens/contacts-list';
-import { borderColor, gray } from '../constants';
+import { colorTheme } from '../constants';
 import NextButton from './next-button';
 import { saveAddingPeople } from '../redux/actions';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export class createChat extends Component {
+  static PropTypes = {
+    saveAddingPeople: PropTypes.func,
+    contactsList: PropTypes.array,
+    email: PropTypes.string,
+  }
+
   state = {
     modal: false,
     addingPeople: [],
@@ -52,14 +60,16 @@ export class createChat extends Component {
       <View style={{ flex: 1 }}>
         <ScrollView style={styles.addingPeopleContainer} >
           <FlatList
-            numColumns={3}
             keyExtractor={this.keyExtractor}
             data={addingPeople}
             renderItem={this.renderItem}
+            contentContainerStyle={styles.flatList}
           />
         </ScrollView>
-        <ContactsList contactsList={contactsList} onPress={this.addHuman} email={email} />
-        {addingPeople.length > 0 ? <NextButton onPress={this.onPressNextButton} icon={require('../images/icons/round_arrow_forward_white_24dp.png')} /> : <View /> }
+        <ContactsList contactsList={contactsList} onPress={this.addHuman} email={email} checkedItems={addingPeople} />
+        {addingPeople.length > 0 ?
+        <NextButton onPress={this.onPressNextButton} Icon={() => (<Icon name="arrow-right" size={18} color="white" />)} />
+        : <View />}
       </View>
     )
   }
@@ -71,13 +81,19 @@ const styles = StyleSheet.create({
     maxHeight: 100,
   },
   addingPeopleText: {
-    color: "#fefefe",
+    color: colorTheme.textColorLite,
     fontSize: 15,
   },
+  flatList: {
+    flexDirection: "row",
+    alignItems: "center",
+    flexWrap: "wrap",
+  },
   addingPeopleItem: {
-    backgroundColor: gray.lite,
+    flexDirection: "row",
+    backgroundColor: colorTheme.lite,
     borderRadius: 12,
-    borderColor: borderColor,
+    borderColor: colorTheme.borderColor,
     borderWidth: 1,
     marginTop: 2,
     marginRight: 5,
@@ -87,7 +103,7 @@ const styles = StyleSheet.create({
     paddingRight: 7,
     paddingBottom: 3,
     paddingLeft: 7,
-    shadowColor: gray.dark,
+    shadowColor: colorTheme.dark,
     shadowOffset: {
       width: 1,
       height: 3,

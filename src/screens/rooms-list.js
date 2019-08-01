@@ -7,7 +7,8 @@ import {
 import { List, ListItem } from 'react-native-elements';
 // import { Actions, Scene } from 'react-native-router-flux';
 import NumberNewMessage from '../components/number-new-messages';
-import { borderColor } from '../constants';
+import { colorTheme } from '../constants';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 const RoomsList = ({ roomsList, chooseRoom }) => {
   const keyExtractor = (item, index) => index.toString();
@@ -16,7 +17,7 @@ const RoomsList = ({ roomsList, chooseRoom }) => {
     <ListItem
       style={styles.item}
       title={item}
-      // leftElement={} todo avatar for chats
+      leftIcon={<Icon name="users" size={35} />}
       rightElement={<NumberNewMessage roomName={item} />}
       onPress={() => { chooseRoom(item) }}
     />
@@ -38,7 +39,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   item: {
-    borderBottomColor: borderColor,
+    borderBottomColor: colorTheme.borderColor,
     borderBottomWidth: 1,
   },
 });

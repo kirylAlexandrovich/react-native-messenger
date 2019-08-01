@@ -10,6 +10,7 @@ import { AsyncStorage, Alert } from 'react-native';
 export class roomsListPage extends Component {
   componentDidMount = () => {
     const { roomsList, userEmail } = this.props;
+
     if (roomsList.length <= 1) {
       AsyncStorage.getItem('roomsList')
         .then((roomsList) => {

@@ -19,7 +19,7 @@ export class chatPage extends Component {
     const { email, roomName } = this.props;
     const time = new Date().toString().split(' ');
     const newTime = `${time[2]} ${time[1]} ${time[3]} ${time[4]}`;
-
+    if (message.length === 0) {return};
     const myMessage = {
       email,
       mess: message,

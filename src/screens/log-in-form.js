@@ -6,6 +6,7 @@ import {
 import { Actions } from 'react-native-router-flux';
 import { Input, Button } from 'react-native-elements';
 import { resetError } from '../actions';
+import { buttonsColor } from '../constants';
 
 const LogInForm = ({ onInputLogin, onInputPassword, loadingState, logInUser, error }) => {
   return (
@@ -18,13 +19,11 @@ const LogInForm = ({ onInputLogin, onInputPassword, loadingState, logInUser, err
               source={require('../images/icons/twotone_email_black_24dp.png')}
             />
           }
-          // errorStyle={{ color: 'red' }}
           onChangeText={onInputLogin}
           textContentType="emailAddress"
           autoCapitalize="none"
         />
         <Input
-          // style={styles.inputPassword}
           placeholder='PASSWORD'
           secureTextEntry={true}
           leftIcon={
@@ -42,7 +41,7 @@ const LogInForm = ({ onInputLogin, onInputPassword, loadingState, logInUser, err
         titleStyle={styles.submitButtonTitle}
         type="outline"
         loading={loadingState}
-        // loadingStyle={}
+        loadingProps={{ color: {buttonsColor} }}
         onPress={logInUser}
       />
       <Button
@@ -69,10 +68,10 @@ const styles = StyleSheet.create({
     marginRight: 'auto',
     marginLeft: 'auto',
     width: 150,
-    borderColor: "#28a745",
+    borderColor: buttonsColor,
   },
   submitButtonTitle: {
-    color: "#28a745"
+    color: buttonsColor
   },
   inputsContainer: {
     height: 130,

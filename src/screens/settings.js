@@ -1,7 +1,9 @@
 import React from 'react';
-import { View, Text, StyleSheet, Animated, Dimensions, Button } from 'react-native';
+import { Text, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
-import Lightbox from './lightbox';
+import Lightbox from '../components/lightbox';
+import store from '../redux/store';
+import { changeColorTheme } from '../redux/actions';
 
 const styles = StyleSheet.create({
   container: {
@@ -16,10 +18,13 @@ const styles = StyleSheet.create({
   },
 });
 
+const changeAppTheme = () => {
+  store.dispatch(changeColorTheme(false));
+} 
+
 const DemoLightbox = ({ data, children }) => (
-  <Lightbox verticalPercent={0.5} horizontalPercent={0.9}>
-    <Text>Demo Lightbox: {data}</Text>
-    <Text>Allows transparency for background</Text>
+  <Lightbox>
+    <Text>Settings</Text>
   </Lightbox>
 );
 

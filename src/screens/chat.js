@@ -5,10 +5,12 @@ import {
   Text,
   View,
   TouchableOpacity,
-  Image,
   TextInput,
   FlatList,
+  Alert
 } from 'react-native';
+import { screenWidth } from '../constants';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export default Chat = ({ currentMessage, messages, email, onChangeText, onSendMessage }) => {
 
@@ -32,6 +34,7 @@ export default Chat = ({ currentMessage, messages, email, onChangeText, onSendMe
     const inMessage = item.email === email;
     const itemStyle = inMessage ? styles.itemOut : styles.itemIn;
     const time = item.time.match(/\d{2}:\d{2}/)[0];
+    
     return (
       <View style={[styles.item, itemStyle]}>
         {!inMessage && this.renderDate(time, item.email)}
@@ -63,13 +66,14 @@ export default Chat = ({ currentMessage, messages, email, onChangeText, onSendMe
             onChangeText={(text) => { onChangeText(text) }} />
         </View>
         <TouchableOpacity style={styles.btnSend} onPress={onSendMessage}>
-          <Image source={require('../images/icons/round_send_white_36dp.png')} style={styles.iconSend} />
+          <Icon name="paper-plane" size={33} color="white" />
+          {/* <Image source={require('../images/icons/round_send_white_36dp.png')} style={styles.iconSend} /> */}
         </TouchableOpacity>
       </View>
     </SafeAreaView>
   );
 }
-
+const maxMsgWidth = screenWidth - 100;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
@@ -88,17 +92,11 @@ const styles = StyleSheet.create({
     padding: 5,
   },
   btnSend: {
-    backgroundColor: "#00aeff",
     width: 40,
     height: 40,
+    backgroundColor: "#00aeff",
     borderRadius: 360,
-    alignItems: 'center',
     justifyContent: 'center',
-  },
-  iconSend: {
-    width: 30,
-    height: 30,
-    alignSelf: 'center',
   },
   inputContainer: {
     borderBottomColor: "#F5FCFF",
@@ -117,20 +115,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   balloon: {
-    maxWidth: 250,
+    maxWidth: maxMsgWidth,
     minWidth: 100,
     padding: 15,
     borderRadius: 20,
   },
   itemIn: {
     alignSelf: 'flex-start',
-    borderTopEndRadius: 300,
-    borderBottomRightRadius: 300,
-    borderBottomLeftRadius: 300,
+    borderTopEndRadius: 30,
+    borderBottomRightRadius: 30,
+    borderBottomLeftRadius: 30,
   },
   itemOut: {
     alignSelf: 'flex-end',
-    borderRadius: 300,
+    borderRadius: 30,
   },
   time: {
     alignSelf: 'flex-end',

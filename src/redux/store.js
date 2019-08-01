@@ -1,6 +1,5 @@
 import { createStore, applyMiddleware, combineReducers } from 'redux';
 import thunk from 'redux-thunk';
-// import reducers from './reducers/index';
 import listsReducer from './reducers/lists';
 import roomsReducer from './reducers/rooms-reducer';
 import errorsReducer from './reducers/errors';

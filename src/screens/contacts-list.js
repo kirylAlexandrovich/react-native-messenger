@@ -1,20 +1,23 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { StyleSheet, ScrollView, FlatList } from 'react-native';
-import { List, ListItem } from 'react-native-elements';
-import { borderColor } from '../constants';
+import { ListItem } from 'react-native-elements';
+import { colorTheme } from '../constants';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
-export default ContactsList = ({ email, contactsList, onPress }) => {
-  const keyExtractor = (item, index) => index.toString();
+export default ContactsList = ({ email, contactsList, onPress, checkedItems }) => {
+  keyExtractor = (item, index) => index.toString()
 
-  const renderItem = ({ item }) => {
-    if (item === email) {return};
+  renderItem = ({ item }) => {
+    if (item === email) { return };
+
     return (<ListItem
       containerStyle={styles.item}
       title={item}
-      leftAvatar={{ source: require('../images/icons/twotone_account_circle_black_36dp.png') }}
+      leftIcon={checkedItems && checkedItems.includes(item) ? <Icon name="user-check" size={35} /> : <Icon name="user" size={35} />}
+      // rightElement={ <FindRoom item={item} /> }
       onPress={() => { onPress(item) }}
     />)
-  };
+  }
 
   return (
     <ScrollView contentContainerStyle={styles.container} >
@@ -22,19 +25,23 @@ export default ContactsList = ({ email, contactsList, onPress }) => {
         keyExtractor={keyExtractor}
         data={contactsList}
         renderItem={renderItem}
+        extraData={checkedItems}
       />
     </ScrollView>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    borderTopColor: borderColor,
+    borderTopColor: colorTheme.borderColor,
     borderTopWidth: 1,
   },
   item: {
     paddingTop: 5,
     paddingBottom: 5,
   },
+  selectedItem: {
+    backgroundColor: "#000",
+  }
 });

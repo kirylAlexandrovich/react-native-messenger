@@ -7,6 +7,10 @@ import { changeConnState, createError,
 import { AsyncStorage } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 
+export const openModalLogOut = () => {
+  Actions.logOutModal();
+}
+
 export const logOut = () => {
   store.dispatch(setEmail(null));
   store.dispatch(changeConnState(false));

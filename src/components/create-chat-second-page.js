@@ -3,9 +3,10 @@ import { View, Text } from 'react-native';
 import { Input } from 'react-native-elements';
 import { Actions } from 'react-native-router-flux';
 import { connect } from 'react-redux';
-import { createRoom, changeRoom, createError } from '../redux/actions';
+import { createRoom, changeRoom, createError, roomCreated } from '../redux/actions';
 import ContactsList from '../screens/contacts-list';
 import NextButton from './next-button';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 
 export class createChatSecondPage extends Component {
   state = {
@@ -26,12 +27,13 @@ export class createChatSecondPage extends Component {
     }
     this.setState({ stateError: '' });
     this.props.createError('');
-    this.props.createRoom(addingPeople, roomName, email);
+    this.props.createRoom(addingPeople, roomName, email, false);
   }
 
   componentDidUpdate = () => {
     const { wasRoomCreated } = this.props;
     if (wasRoomCreated) {
+      this.props.roomCreated(false);
       this.props.changeRoom(this.state.roomName);
       Actions.jump('chatPage');
     }
@@ -50,7 +52,7 @@ export class createChatSecondPage extends Component {
           errorMessage={stateError || error}
         />
         <ContactsList contactsList={addingPeople} onPress={() => {}} />
-        <NextButton onPress={this.createRoom} icon={require('../images/icons/round_check_white_24dp.png')} />
+        <NextButton onPress={this.createRoom} Icon={() => (<Icon name="check" size={18} color="white" />)} />
       </View>
     )
   }
@@ -67,6 +69,7 @@ const mapDispatchToProps = {
   createRoom,
   changeRoom,
   createError,
+  roomCreated,
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(createChatSecondPage)

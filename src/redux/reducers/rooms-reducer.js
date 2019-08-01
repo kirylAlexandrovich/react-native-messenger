@@ -2,10 +2,12 @@ import { AsyncStorage, Alert } from 'react-native';
 
 const initialState = {
   currentRoomName: 'general',
+  roomName: '',
   wasRoomCreated: false,
   roomsList: [],
+  privateRoomsList: [],
   roomMessagesMap: {},
-  hasRoomNewMessage: {'general': 3, 'new room': 1},
+  hasRoomNewMessage: {},
 };
 
 export default function rooms(state = initialState, action) {
@@ -20,8 +22,11 @@ export default function rooms(state = initialState, action) {
     case 'CHANGE_ROOMS_LIST':
       return { ...state, roomsList: ['general', ...action.payload] };
 
-    case 'GET_ROOMS_LIST':
-      return { ...state, roomsList: action.payload };
+    case 'CHANGE_PRIVATE_ROOMS_LIST':
+      return { ...state, privateRoomsList: action.payload };
+      
+    // case 'GET_ROOMS_LIST':
+    //   return { ...state, roomsList: action.payload };
 
     case 'SAVE_MESSAGES_MAP':
       return { ...state,

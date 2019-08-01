@@ -1,20 +1,22 @@
 import React, { Component } from 'react';
-import { AsyncStorage, Alert, ActivityIndicator, Text } from 'react-native';
+import { AsyncStorage } from 'react-native';
 import { Provider } from 'react-redux';
-import { Router, Stack, Scene, Modal, Drawer, Overlay, Tabs, ActionConst, Actions } from 'react-native-router-flux';
 import store from './src/redux/store';
+import { Router, Stack, Scene, Modal, Drawer, Overlay, Actions } from 'react-native-router-flux';
 import LogInPage from './src/components/log-in-page';
 import ChatsList from './src/components/rooms-list-page';
-import NavBar from './src/navigation/navBar';
-import ChatPage from './src/components/chat-page';
 import RegisterPage from './src/components/register-page';
-import DrawerMenu from './src/components/drawer';
-import { resetError, quitChat } from './src/actions';
-import DemoLightbox from './src/lightbox/demo-lightbox';
 import CreateChat from './src/components/create-chat';
 import CreateChatSecondPage from './src/components/create-chat-second-page';
+import ChatPage from './src/components/chat-page';
+import DrawerMenu from './src/components/drawer';
 import ContactsPage from './src/components/contacts-page';
-import { gray } from './src/constants';
+import LogOutModal from './src/screens/log-out-modal';
+import SettingsLightbox from './src/screens/settings';
+import NavBar from './src/navigation/navBar';
+import { resetError, quitChat } from './src/actions';
+import { colorTheme } from './src/constants';
+import SplashScreen from 'react-native-splash-screen';
 
 class App extends Component {
   state = {
@@ -29,13 +31,15 @@ class App extends Component {
           store.dispatch({ type: 'SET_EMAIL', payload: email });
           this.setState({ isLogIn: true });
         }
+        SplashScreen.hide();
+        Actions.login();
       });
   }
 
   render() {
     return (
       <Provider store={store}>
-        <Router navigationBarStyle={{ backgroundColor: [gray.dark] }} tintColor="#fff" titleStyle={{ color: "#fff", }} >
+        <Router navigationBarStyle={{ backgroundColor: [colorTheme.dark] }} tintColor="#fff" titleStyle={{ color: "#fff", }} >
           <Overlay key="overlay">
             <Modal key="modal">
 
@@ -47,7 +51,7 @@ class App extends Component {
               >
                 <Stack key="chat" navBar={NavBar} duration={0} >
                   <Scene key="chatsList" component={ChatsList} title="chatList" />
-                  <Scene key="chatPage" clone component={ChatPage} onExit={quitChat} back />
+                  <Scene key="chatPage" component={ChatPage} onExit={quitChat} back />
                 </Stack>
 
                 <Stack key="createChat" >
@@ -65,7 +69,9 @@ class App extends Component {
                 <Scene key="register" component={RegisterPage} onExit={resetError} />
               </Stack>
 
-              <Scene key="demo_lightbox" component={DemoLightbox} data={'some data'} />
+              <Scene key="settings" component={SettingsLightbox} />
+
+              <Scene key="logOutModal" component={LogOutModal} hideNavBar />
 
             </Modal>
           </Overlay>

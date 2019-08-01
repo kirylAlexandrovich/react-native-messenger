@@ -1,8 +1,8 @@
-// import { AsyncStorage } from 'react-native';
-
+import { Alert } from "react-native";
 const initialState = {
   connectionState: false,
   loadingState: false,
+  colorTheme: true,
 };
 
 export default function appStates(state = initialState, action) {
@@ -12,8 +12,11 @@ export default function appStates(state = initialState, action) {
       return { ...state, connectionState: action.payload };
 
     case 'CHANGE_LOADING_STATE':
-      // AsyncStorage.setItem('loadingState', action.payload);
       return { ...state, loadingState: action.payload };
+
+    case 'CHANGE_COLOR_THEME':
+      Alert.alert('theme changed')
+      return { ...state, colorTheme: action.payload };
 
     default:
       return state;

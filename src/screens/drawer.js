@@ -1,10 +1,8 @@
-import React, { Component } from 'react';
-import { View, Text, StyleSheet, TouchableOpacity, ToolbarAndroid, Image } from 'react-native';
-import { gray } from '../constants';
-import { logOut } from '../actions';
+import React from 'react';
+import { View, Text, StyleSheet, TouchableOpacity, Image } from 'react-native';
+import { colorTheme } from '../constants';
 import { Actions } from 'react-native-router-flux';
-import { moveToCreatingChat } from '../actions';
-import { borderColor } from '../constants';
+import { moveToCreatingChat, openModalLogOut } from '../actions';
 
 export default DrawerScreen = ({ email }) => {
   return (
@@ -30,14 +28,14 @@ export default DrawerScreen = ({ email }) => {
 
       <TouchableOpacity
         style={styles.menuItems}
-        onPress={Actions.demo_lightbox} >
+        onPress={Actions.settings} >
         <Image source={require('../images/icons/twotone_settings_black_48dp.png')} />
         <Text style={styles.menuItemsTitle}>Settings</Text>
       </TouchableOpacity>
 
       <TouchableOpacity
         style={styles.menuItems}
-        onPress={ logOut } >
+        onPress={ openModalLogOut } >
         <Image source={require('../images/icons/icons8-sign-out-48.png')} />
         <Text style={styles.menuItemsTitle}>Log out</Text>
       </TouchableOpacity>
@@ -51,11 +49,11 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   emailStyle: {
-    color: "#fafafa"
+    color: colorTheme.textColorLite,
   },
   drawerHeader: {
     height: 150,
-    backgroundColor: gray.lite,
+    backgroundColor: colorTheme.lite,
     paddingLeft: 20,
     paddingTop: 20,
   },
@@ -63,7 +61,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingHorizontal: 20,
     paddingVertical: 10,
-    borderBottomColor: borderColor,
+    borderBottomColor: colorTheme.borderColor,
     borderBottomWidth: 1,
     flexDirection: 'row',
   },
